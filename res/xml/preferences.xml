@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory
+                android:title="Credentials">
+                <EditTextPreference
+		                android:name="Username"
+		                android:summary="Enter your Enrollment No."
+		                android:defaultValue=""
+		                android:title="Enrollment No."
+		                android:key="username"
+		                android:inputType="phone" />
+		                
+		        <EditTextPreference
+		                android:name="Password"
+		                android:summary="Enter your Webkiosk Password"
+		                android:defaultValue=""
+		                android:title="Password"
+		                android:key="password"
+		                android:inputType="textPassword" />
+		                
+        </PreferenceCategory>
+        <PreferenceCategory
+                android:title="Other">
+		   
+                <EditTextPreference
+                        android:name="Threshold Attendance"
+                        android:summary="Your ideal minimum attendance for a given subject"
+                        android:defaultValue="90"
+                        android:title="Threshold Attendance"
+                        android:key="threshold"
+                        android:inputType="phone" />
+                <PreferenceScreen 
+                    	android:title="About"
+                    	android:summary="@string/about2"
+   						android:key="about">
+   						<intent android:action="com.juet.attendance.About"/>
+                </PreferenceScreen>
+                
+        </PreferenceCategory>
+        
+        
+</PreferenceScreen>
