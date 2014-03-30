@@ -2,7 +2,6 @@ This app allows the user to view their attendance on their android phone. Built 
 
 
 __________________
-This app is licensed unider the MIT License.
 
 The MIT License (MIT)
 
