@@ -31,10 +31,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.view.LayoutInflater;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -73,7 +73,6 @@ public class attendance extends SherlockFragment {
 
 	public void startList() {
 
-		//text = (TextView) v.findViewById(R.id.text);
 		image_details = getListData();
 		lv1 = (ListView) v.findViewById(R.id.custom_list);
 	}
@@ -105,9 +104,6 @@ public class attendance extends SherlockFragment {
 		        values.putString("lC",subj.lastClass );
 		        values.putString("lA",subj.lastAbsent );
 				sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-//		        
-
-				// System.out.println("THRESHOLD="+sharedPref.getString("username", "90"));
 
 				
 		        values.putString("T", sharedPref.getString("threshold", "90"));
@@ -158,7 +154,6 @@ public class attendance extends SherlockFragment {
 					}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return true;
@@ -176,7 +171,6 @@ public class attendance extends SherlockFragment {
 					}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return true;
@@ -248,10 +242,13 @@ public class attendance extends SherlockFragment {
 					textDate="Today";
 				else if(yesterday.equals(textDate))
 					textDate="Yesterday";
-				upDate=(TextView) v.findViewById(R.id.time);
+//				upDate=(TextView) v.findViewById(R.id.time);
 				
-				upDate.setText("Last Updated: "+textDate);
+//				upDate.setText("Last Updated: "+textDate);
 				line=line.split("~")[1];
+				ActionBar ab=getSherlockActivity().getSupportActionBar();
+				ab.setTitle("Attendance");
+			    ab.setSubtitle("Last Updated: "+textDate); 
 				
 
 				// System.out.println("Refresh type="+line);

@@ -936,8 +936,8 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020075;
     }
     public static final class id {
-        public static final int LT=0x7f05003c;
-        public static final int a=0x7f05003d;
+        public static final int LT=0x7f05003b;
+        public static final int a=0x7f05003c;
         public static final int abs__action_bar=0x7f050020;
         public static final int abs__action_bar_container=0x7f05001f;
         public static final int abs__action_bar_subtitle=0x7f050011;
@@ -977,29 +977,29 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050013;
         public static final int abs__title=0x7f05001b;
         public static final int abs__up=0x7f05000b;
-        public static final int action_next=0x7f05004c;
-        public static final int action_prev=0x7f05004b;
-        public static final int action_quickrefresh=0x7f050049;
-        public static final int action_refresh=0x7f050048;
-        public static final int action_settings=0x7f05004a;
-        public static final int custom_list=0x7f05003a;
+        public static final int action_next=0x7f05004b;
+        public static final int action_prev=0x7f05004a;
+        public static final int action_quickrefresh=0x7f050048;
+        public static final int action_refresh=0x7f050047;
+        public static final int action_settings=0x7f050049;
+        public static final int custom_list=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int edit_query=0x7f050026;
-        public static final int headlines_fragment=0x7f05003b;
+        public static final int headlines_fragment=0x7f05003a;
         public static final int homeAsUp=0x7f050006;
-        public static final int lA=0x7f050040;
-        public static final int lC=0x7f05003f;
-        public static final int lec=0x7f050046;
+        public static final int lA=0x7f05003f;
+        public static final int lC=0x7f05003e;
+        public static final int lec=0x7f050045;
         public static final int listMode=0x7f050002;
-        public static final int nA=0x7f050041;
-        public static final int nP=0x7f050042;
+        public static final int nA=0x7f050040;
+        public static final int nP=0x7f050041;
         public static final int normal=0x7f050001;
-        public static final int p=0x7f05003e;
-        public static final int s=0x7f050043;
+        public static final int p=0x7f05003d;
+        public static final int s=0x7f050042;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
-        public static final int subject=0x7f050045;
+        public static final int subject=0x7f050044;
         public static final int tabMode=0x7f050003;
         public static final int textView1=0x7f050032;
         public static final int textView2=0x7f050033;
@@ -1008,10 +1008,9 @@ containing a value of this type.
         public static final int textView5=0x7f050036;
         public static final int textView6=0x7f050037;
         public static final int textView7=0x7f050038;
-        public static final int time=0x7f050039;
-        public static final int tut=0x7f050047;
+        public static final int tut=0x7f050046;
         public static final int useLogo=0x7f050004;
-        public static final int value=0x7f050044;
+        public static final int value=0x7f050043;
         public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
