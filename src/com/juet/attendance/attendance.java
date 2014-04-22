@@ -54,7 +54,7 @@ public class attendance extends SherlockFragment {
 	ArrayList<AttendanceValues> results;
 	ArrayList<AttendanceValues> image_details;
 	SharedPreferences sharedPref;
-	String WebUser, WebPass;
+	String WebUser, WebPass, Institute;
 	WebExtractor web;
 	ProgressDialog pd;
 	static int refreshtype;
@@ -154,7 +154,7 @@ public class attendance extends SherlockFragment {
 					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
-					web.execute(WebUser,WebPass,"10");
+					web.execute(WebUser,WebPass,"10",Institute);
 					}
 
 			} catch (Exception e) {
@@ -171,7 +171,7 @@ public class attendance extends SherlockFragment {
 					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
-					web.execute(WebUser,WebPass,"20");
+					web.execute(WebUser,WebPass,"20",Institute);
 
 					}
 
@@ -211,6 +211,7 @@ public class attendance extends SherlockFragment {
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 		WebUser=sharedPref.getString("username","n/a");
         WebPass=sharedPref.getString("password","n/a");
+        Institute=sharedPref.getString("institute","2");
 
 	}
 
@@ -298,7 +299,7 @@ public class attendance extends SherlockFragment {
 					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
-					web.execute(WebUser,WebPass,"10");
+					web.execute(WebUser,WebPass,"10",Institute);
 
 				}
 			}
@@ -330,19 +331,34 @@ public class attendance extends SherlockFragment {
 		//int Webrunning=0;
 
 	  public Void doInBackground(String... cred) {
-		    String url = "https://webkiosk.juet.ac.in/CommonFiles/UserAction.jsp";
-		    String attendance = "https://webkiosk.juet.ac.in/StudentFiles/Academic%5CStudentAttendanceList.jsp";
+		  	String inst="";
+		  	user=cred[0];pwd=cred[1];refreshtype=Integer.parseInt(cred[2]);
+		  	String postParams="";
+		    
+		  	if(cred[3].equals("1")) {
+		  		inst="jiit";
+		  		postParams="x=&txtInst=Institute&InstCode=J128&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode="+user+"&DOB=DOB&DATE1=2-4-2014&txtPin=Password%2FPin&Password="+pwd+"&BTNSubmit=Submit";
+			    
+		    }
+		    else if(cred[3].equals("2")) {
+		    	inst="juet";
+		    	postParams="txtInst=Institute&InstCode=JUET&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode="+user+"&txtPin=Password%2FPin&Password="+pwd+"&BTNSubmit=Submit";
+			    
+		    }
+		    String url = "https://webkiosk."+inst+".ac.in/CommonFiles/UserAction.jsp";
+		    String attendance = "https://webkiosk."+inst+".ac.in/StudentFiles/Academic/StudentAttendanceList.jsp";
 		    WebExtractor http = new WebExtractor();
 		    try {
 		    // make sure cookies is turn on
 		    CookieHandler.setDefault(new CookieManager());
 		    user=cred[0];pwd=cred[1];refreshtype=Integer.parseInt(cred[2]);
-		    String postParams="txtInst=Institute&InstCode=JUET&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode="+user+"&txtPin=Password%2FPin&Password="+pwd+"&BTNSubmit=Submit";
+//		    String postParams="x=&txtInst=Institute&InstCode=J128&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode=9911103500&DOB=DOB&DATE1=2-4-2014&txtPin=Password%2FPin&Password=Poisingh-123&BTNSubmit=Submit";
+		    System.out.println("WUTT");
 		    http.sendPost(url, postParams);
-
+		    
 		    String result = http.GetPageContent(attendance);
 
-		    
+		    System.out.println(result);
 
 		     // System.out.println(result);
 
@@ -359,7 +375,7 @@ public class attendance extends SherlockFragment {
 			    for(int i=0;i<15;i++) {
 			    	
 				    if(http.data[i][5]!=null && http.data[i][5]!="N/A") {	
-				    	attendance="https://webkiosk.juet.ac.in/StudentFiles/Academic/"+http.data[i][5];
+				    	attendance="https://webkiosk."+inst+".ac.in/StudentFiles/Academic/"+http.data[i][5];
 						result = http.GetPageContent(attendance);
 						result=result.substring(result.indexOf("y>")+2,result.indexOf("</tb"));
 						int present,absent,lastClassIndex,lastAbsentIndex;
@@ -407,8 +423,8 @@ public class attendance extends SherlockFragment {
 		    }
 		    catch(Exception e) {
 		    	
-
-		    	// System.out.println("Exception inBkg = "+e);
+		    	
+		    	System.out.println("Exception inBkg = "+e);
 
 		    	
 		    	if(e.getMessage().equals("https://webkiosk.juet.ac.in/StudentFiles/Academic/null")) {
@@ -456,7 +472,7 @@ public class attendance extends SherlockFragment {
 					
 
 					// System.out.println("Refresh Code: "+refreshtype);
-
+					
 					
 					if(refreshtype==10)
 						fos.write((date+"~"+"notsoquick\n").getBytes());
@@ -464,8 +480,32 @@ public class attendance extends SherlockFragment {
 						fos.write((date+"~"+"reallyquick\n").getBytes());
 					while(!data[i][0].isEmpty())
 					{
+						try {
+							data[i][1]=((int)Double.parseDouble(data[i][1]))+"";
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							data[i][2]=((int)Double.parseDouble(data[i][2]))+"";
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							data[i][3]=((int)Double.parseDouble(data[i][3]))+"";
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							data[i][4]=((int)Double.parseDouble(data[i][4]))+"";
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						s=data[i][0]+"~"+data[i][1]+"~"+data[i][2]+"~"+data[i][3]+"~"+data[i][4]+"~"+data[i][6]+"~"+data[i][7]+"~"+data[i][8]+"~"+data[i][9]+"\n";
-						// System.out.print("s = "+s);
+						 System.out.println("s = "+s);
 						fos.write(s.getBytes());
 						i++;
 					}
@@ -477,7 +517,7 @@ public class attendance extends SherlockFragment {
 					
 				} catch(Exception e){
 
-					// System.out.println("Err : "+e);
+					 System.out.println("Err : "+e);
 
 				}
 

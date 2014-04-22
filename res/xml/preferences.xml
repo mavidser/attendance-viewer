@@ -17,6 +17,14 @@
 		                android:title="Password"
 		                android:key="password"
 		                android:inputType="textPassword" />
+		        <ListPreference
+		            	android:name="Institute"
+		                android:key="institute"
+		            	android:entries="@array/InstituteArray"
+		            	android:summary="Select your Institute"
+		            	android:entryValues="@array/InstituteValues"
+		            	android:defaultValue="2"
+		            	android:title="Institute" />
 		                
         </PreferenceCategory>
         <PreferenceCategory
