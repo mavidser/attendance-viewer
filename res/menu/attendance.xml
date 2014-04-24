@@ -5,7 +5,7 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/refreshbutton"
-        android:icon="@drawable/ic_action_refresh"/>
+        android:icon="@drawable/ic_action_refreshbutton"/>
     
     <item
         android:id="@+id/action_quickrefresh"
