@@ -929,11 +929,10 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
         public static final int card=0x7f020070;
-        public static final int download=0x7f020071;
-        public static final int ic_action_navigation_next_item=0x7f020072;
-        public static final int ic_action_navigation_previous_item=0x7f020073;
-        public static final int ic_action_refresh=0x7f020074;
-        public static final int ic_launcher=0x7f020075;
+        public static final int ic_action_navigation_next_item=0x7f020071;
+        public static final int ic_action_navigation_previous_item=0x7f020072;
+        public static final int ic_action_refreshbutton=0x7f020073;
+        public static final int ic_launcher=0x7f020074;
     }
     public static final class id {
         public static final int LT=0x7f05003b;

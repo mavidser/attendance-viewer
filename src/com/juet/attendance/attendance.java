@@ -188,7 +188,6 @@ public class attendance extends SherlockFragment {
 				//new WebExtractor().execute("121342".toString(),"Homerun".toString());
 			
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return true;
@@ -247,8 +246,9 @@ public class attendance extends SherlockFragment {
 //				upDate.setText("Last Updated: "+textDate);
 				line=line.split("~")[1];
 				ActionBar ab=getSherlockActivity().getSupportActionBar();
-				ab.setTitle("Attendance");
-			    ab.setSubtitle("Last Updated: "+textDate); 
+				ab.setTitle("My Attendance");
+			    ab.setSubtitle("Last Updated: "+textDate);
+			    ab.setDisplayShowHomeEnabled(false);
 				
 
 				// System.out.println("Refresh type="+line);
@@ -352,9 +352,14 @@ public class attendance extends SherlockFragment {
 //		    String postParams="x=&txtInst=Institute&InstCode=J128&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode=9911103500&DOB=DOB&DATE1=2-4-2014&txtPin=Password%2FPin&Password=Poisingh-123&BTNSubmit=Submit";
 		    System.out.println("WUTT");
 		    http.sendPost(url, postParams);
+		    if(refreshtype==10)pd.setProgress(10);
+		    else pd.setProgress(50);
+//		    pd.setMessage("Logging in");
 		    
 		    String result = http.GetPageContent(attendance);
-
+		    if(refreshtype==10)pd.setProgress(20);
+		    else pd.setProgress(100);
+//		    pd.setMessage("Fetching Attendance");
 		    System.out.println(result);
 
 		     // System.out.println(result);
@@ -364,16 +369,30 @@ public class attendance extends SherlockFragment {
 			//
 
 			// System.out.println(data[i][5]);
-
-			
-
+		    int num=0;
+			for(int i=0;i<15;i++) {
+				if(http.data[i][0]!=null)
+					num++;
+			}
+			num=(int)Math.floor(80/(num));
+			System.out.println(num+" ");
+//			int prog=20;
 		    if(refreshtype==10){
+//		    	pd.setMessage("Fetching Subject Attendance");
 
 			    for(int i=0;i<15;i++) {
 			    	
 				    if(http.data[i][5]!=null && http.data[i][5]!="N/A") {	
 				    	attendance="https://webkiosk."+inst+".ac.in/StudentFiles/Academic/"+http.data[i][5];
 						result = http.GetPageContent(attendance);
+//						pd.setProgress(prog+num);
+						try{
+						pd.incrementProgressBy(num);
+						}
+						catch(Exception e){
+							pd.setProgress(0);
+						}
+//						prog+=num;
 						result=result.substring(result.indexOf("y>")+2,result.indexOf("</tb"));
 						int present,absent,lastClassIndex,lastAbsentIndex;
 						String lastClass,lastAbsent;
@@ -411,6 +430,7 @@ public class attendance extends SherlockFragment {
 
 					
 				}
+			    pd.setProgress(100);
 
 		    }
 
@@ -674,10 +694,15 @@ public class attendance extends SherlockFragment {
 
 			 
 			 pd=new ProgressDialog(getActivity());
+			 
+			 pd.setIndeterminate(false);
+			 pd.setProgressStyle(pd.STYLE_HORIZONTAL);
+			 pd.setMax(100);
+			 pd.setProgress(0);
 			 pd.setMessage("Fetching...");
 			 pd.setCancelable(false);
 			 pd.show();
-			 //getActivity().setProgressBarIndeterminateVisibility(Boolean.TRUE);
+//			 getActivity().setProgressBarIndeterminateVisibility(Boolean.TRUE);
 
 		 }
 		 public void onPostExecute(Void params) {
