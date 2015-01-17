@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.URL;
@@ -35,6 +36,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.view.LayoutInflater;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -330,6 +332,14 @@ public class attendance extends SherlockFragment {
 	  public Void doInBackground(String... cred) {
 		  	String inst="";
 		  	user=cred[0];pwd=cred[1];refreshtype=Integer.parseInt(cred[2]);
+		  	
+		  	try {
+		  		user = java.net.URLEncoder.encode(user, "UTF-8");
+		  		pwd = java.net.URLEncoder.encode(pwd, "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+		  	
 		  	String postParams="";
 		    
 		  	if(cred[3].equals("1")) {
