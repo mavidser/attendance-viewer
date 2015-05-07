@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="android-support-v4">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../AndroidStudio/JakeWharton-ActionBarSherlock-5a15d92/actionbarsherlock-samples/fragments/libs/android-support-v4.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

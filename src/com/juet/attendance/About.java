@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import android.app.Activity;
 import com.juet.attendance.R;
 
-public class About extends SherlockActivity {
+public class About extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);	

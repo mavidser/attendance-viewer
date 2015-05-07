@@ -1,6 +1,6 @@
 Play Store Link: http://play.google.com/store/apps/details?id=com.juet.attendance
 
-This app allows the user to view their attendance on their android phone. Built for JJUET, JIIT students.
+This app allows the user to view their attendance on their android phone. Built for JUET, JIIT students.
 
 
 __________________

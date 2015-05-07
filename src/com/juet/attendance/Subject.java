@@ -1,7 +1,11 @@
 package com.juet.attendance;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
+//import com.actionbarsherlock.app.SherlockDialogFragment;
+//import com.actionbarsherlock.view.Window;
 import com.juet.attendance.R;
+
+import android.support.v4.view.WindowCompat;
+import android.support.v4.app.DialogFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class Subject extends SherlockDialogFragment {
+public class Subject extends DialogFragment {
 	
 	private TextView LT,p,a,lA,lC,nP,nA,s;
 
@@ -22,7 +26,7 @@ public class Subject extends SherlockDialogFragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		//getDialog().requestWindowFeature((int) Window.FEATURE_NO_TITLE);
+//		getDialog().requestWindowFeature((int) Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.activity_subject, container);
         getDialog().setTitle("Subject Details");
         Bundle values=getArguments();

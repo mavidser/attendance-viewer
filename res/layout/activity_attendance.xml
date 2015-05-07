@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top"
-    android:background="@color/gray"
+    android:background="@android:color/background_light"
     android:orientation="vertical" >
     
 
@@ -11,9 +11,9 @@
         android:id="@+id/custom_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:dividerHeight="0dp"
-        android:divider="@android:color/transparent" />
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:dividerHeight="1dp"
+        android:divider="#dddddd" />
     
 </LinearLayout>

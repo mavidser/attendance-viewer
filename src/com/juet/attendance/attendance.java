@@ -1,6 +1,8 @@
 package com.juet.attendance;
 
 
+import android.support.v7.app.ActionBarActivity;
+
 import android.support.v4.app.FragmentManager;
 
 import java.io.File;
@@ -32,14 +34,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 
 import android.view.LayoutInflater;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +52,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.annotation.TargetApi;
-public class attendance extends SherlockFragment {
+public class attendance extends ActionBarActivity {
 	Intent starter;
 	ListView lv1;
 	View v;
@@ -65,10 +68,59 @@ public class attendance extends SherlockFragment {
 	//@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        System.out.println("HELLO");
+        setContentView(R.layout.activity_attendance);
 		//getActivity().setContentView(R.layout.activity_attendance);
 
-		setHasOptionsMenu(true);
-		
+//		setHasOptionsMenu(true);
+
+
+        starter=this.getIntent();
+//        v= LayoutInflater.from(this).inflate(R.layout.activity_attendance,
+//                null);
+        startList();
+        lv1.setAdapter(new CustomListAdapter(attendance.this, image_details));
+        if(refreshtype==10)
+            lv1.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+
+//				FragmentManager fm = ;
+                    Subject sub=new Subject();
+                    Bundle values=new Bundle();
+
+                    AttendanceValues subj=results.get(position);
+                    values.putString("A", subj.getAttendance());
+                    values.putString("l",subj.lec );
+                    values.putString("t",subj.tut );
+                    values.putString("p",subj.p );
+                    values.putString("a",subj.a );
+                    values.putString("lC",subj.lastClass );
+                    values.putString("lA",subj.lastAbsent );
+                    sharedPref = PreferenceManager.getDefaultSharedPreferences(attendance.this);
+
+
+                    values.putString("T", sharedPref.getString("threshold", "90"));
+
+                    sub.setArguments(values);
+                    sub.show(getSupportFragmentManager(), "subject_details");
+                    //Toast.makeText(this, "Selected :" + " " + position + " " + attendanceData, Toast.LENGTH_LONG).show();
+                }
+
+            });
+        else
+            lv1.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    Toast.makeText(attendance.this, "Not available when using Quick Refresh", Toast.LENGTH_LONG).show();
+                }
+            });
+        lv1.setClickable(false);
+//
+//        return v;
+
 
 	}
 
@@ -76,69 +128,28 @@ public class attendance extends SherlockFragment {
 	public void startList() {
 
 		image_details = getListData();
-		lv1 = (ListView) v.findViewById(R.id.custom_list);
+		lv1 = (ListView) findViewById(R.id.custom_list);
 	}
+
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//			Bundle savedInstanceState) {
+//
+//	}
+
+//	@Override
+//	public void onActivityCreated(Bundle savedInstanceState) {
+//		super.onActivityCreated(savedInstanceState);
+//
+//	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		starter=getActivity().getIntent();
-		v= LayoutInflater.from(getActivity()).inflate(R.layout.activity_attendance,
-				null);
-		startList();
-		lv1.setAdapter(new CustomListAdapter(getActivity().getApplicationContext(), image_details));
-		if(refreshtype==10)
-		lv1.setOnItemClickListener(new OnItemClickListener() {
+    public boolean onCreateOptionsMenu (Menu menu) {
+//        inflater.inflate(R.menu.attendance, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
 
-			@Override
-			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-	
-				FragmentManager fm = getFragmentManager();
-		        Subject sub=new Subject();
-		        Bundle values=new Bundle();
-
-				AttendanceValues subj=results.get(position);
-				values.putString("A", subj.getAttendance());
-		        values.putString("l",subj.lec );
-		        values.putString("t",subj.tut );
-		        values.putString("p",subj.p );
-		        values.putString("a",subj.a );
-		        values.putString("lC",subj.lastClass );
-		        values.putString("lA",subj.lastAbsent );
-				sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-
-				
-		        values.putString("T", sharedPref.getString("threshold", "90"));
-
-		        sub.setArguments(values);
-		        sub.show(fm, "subject_details");
-		        //Toast.makeText(getActivity(), "Selected :" + " " + position + " " + attendanceData, Toast.LENGTH_LONG).show();
-			}
-
-		});
-		else
-			lv1.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-					Toast.makeText(getActivity(), "Not available when using Quick Refresh", Toast.LENGTH_LONG).show();
-				}
-			});
-			lv1.setClickable(false);
-
-		return v;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-	}
-
-	//@Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.attendance, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+        getMenuInflater().inflate(R.menu.attendance, menu);
+        return true;
     }
 
 	@Override
@@ -149,7 +160,7 @@ public class attendance extends SherlockFragment {
 			try {
 				setCredentials();
 				if(WebUser.equals("n/a"))
-					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
 					web.execute(WebUser,WebPass,"10",Institute);
@@ -159,13 +170,13 @@ public class attendance extends SherlockFragment {
 				e.printStackTrace();
 			}
 			return true;
-			
+
 		case R.id.action_quickrefresh:
 			try {
 
 				setCredentials();
 				if(WebUser.equals("n/a"))
-					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
 					web.execute(WebUser,WebPass,"20",Institute);
@@ -176,24 +187,24 @@ public class attendance extends SherlockFragment {
 				e.printStackTrace();
 			}
 			return true;
-			
+
 		case R.id.action_settings:
-			
-			
+
+
 
 			// System.out.println("Pressed");
 
-			
+
 			try {
-				Intent settingsActivity = new Intent(getActivity().getBaseContext(),SettingsView.class);
+				Intent settingsActivity = new Intent(attendance.this,SettingsView.class);
 				startActivity(settingsActivity);
 				//new WebExtractor().execute("121342".toString(),"Homerun".toString());
-			
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return true;
-			
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -203,7 +214,7 @@ public class attendance extends SherlockFragment {
 
 	public void setCredentials()
 	{
-		sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+		sharedPref = PreferenceManager.getDefaultSharedPreferences(attendance.this);
 		WebUser=sharedPref.getString("username","n/a");
         WebPass=sharedPref.getString("password","n/a");
         Institute=sharedPref.getString("institute","2");
@@ -220,19 +231,19 @@ public class attendance extends SherlockFragment {
 
 
 		try{
-			File file = getActivity().getBaseContext().getFileStreamPath("hello_file");
+			File file = attendance.this.getFileStreamPath("hello_file");
 			if(file.exists()){
-				
+
 
 				// System.out.println("YYY");
 
-				
+
 				FileInputStream fos;
-				fos=getActivity().openFileInput("hello_file");
+				fos=this.openFileInput("hello_file");
 				BufferedReader br=new BufferedReader(new InputStreamReader(fos));
 				String line;String split[]=new String[9];
 				line=br.readLine();
-				
+
 				DateFormat dateFormat = new SimpleDateFormat("dd MMM");
 			    Calendar cal = Calendar.getInstance();
 			    String today=""+dateFormat.format(cal.getTime());
@@ -244,34 +255,33 @@ public class attendance extends SherlockFragment {
 				else if(yesterday.equals(textDate))
 					textDate="Yesterday";
 //				upDate=(TextView) v.findViewById(R.id.time);
-				
+
 //				upDate.setText("Last Updated: "+textDate);
 				line=line.split("~")[1];
-				ActionBar ab=getSherlockActivity().getSupportActionBar();
-				ab.setTitle("My Attendance");
-			    ab.setSubtitle("Last Updated: "+textDate);
-			    ab.setDisplayShowHomeEnabled(false);
-				
+                this.getSupportActionBar().setTitle("My Attendance");
+                this.getSupportActionBar().setSubtitle("Last Updated: "+textDate);
+                this.getSupportActionBar().setDisplayShowHomeEnabled(false);
+
 
 				// System.out.println("Refresh type="+line);
 
-				
+
 				if(line.equals("notsoquick"))
 					refreshtype=10;
 				else
 					refreshtype=20;
 				while ((line = br.readLine()) != null) {
 			        split=line.split("~");
-			        
+
 
 			        // System.out.println("Split size="+split.length);
 
-			        
+
 			        //
 
 			        // System.out.println(split[0]+" "+split[1]+" "+split[2]+" "+split[3]+" "+split[4]+" ");
 
-			        
+
 
 			        attendanceData = new AttendanceValues();
 			        attendanceData.subject=(split[0].substring(0, split[0].lastIndexOf('-')));
@@ -295,7 +305,7 @@ public class attendance extends SherlockFragment {
 			else {
 				setCredentials();
 				if(WebUser.equals("n/a"))
-					Toast.makeText(getActivity(), "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Enter Credentials in Settings", Toast.LENGTH_LONG).show();
 				else {
 					web=new WebExtractor();
 					web.execute(WebUser,WebPass,"10",Institute);
@@ -304,7 +314,7 @@ public class attendance extends SherlockFragment {
 			}
 			} catch(Exception e) {
 
-				// System.out.println("e="+e);
+				System.out.println("e="+e);
 
 			}
 
@@ -325,32 +335,32 @@ public class attendance extends SherlockFragment {
 		private HttpsURLConnection conn;
 		private final String USER_AGENT = "Mozilla/5.0";
 		String user,pwd;
-		
+
 		int got=0;
 		//int Webrunning=0;
 
 	  public Void doInBackground(String... cred) {
 		  	String inst="";
 		  	user=cred[0];pwd=cred[1];refreshtype=Integer.parseInt(cred[2]);
-		  	
+
 		  	try {
 		  		user = java.net.URLEncoder.encode(user, "UTF-8");
 		  		pwd = java.net.URLEncoder.encode(pwd, "UTF-8");
 			} catch (UnsupportedEncodingException e1) {
 				e1.printStackTrace();
 			}
-		  	
+
 		  	String postParams="";
-		    
+
 		  	if(cred[3].equals("1")) {
 		  		inst="jiit";
 		  		postParams="x=&txtInst=Institute&InstCode=J128&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode="+user+"&DOB=DOB&DATE1=2-4-2014&txtPin=Password%2FPin&Password="+pwd+"&BTNSubmit=Submit";
-			    
+
 		    }
 		    else if(cred[3].equals("2")) {
 		    	inst="juet";
 		    	postParams="txtInst=Institute&InstCode=JUET&txtuType=Member+Type&UserType=S&txtCode=Enrollment+No&MemberCode="+user+"&txtPin=Password%2FPin&Password="+pwd+"&BTNSubmit=Submit";
-			    
+
 		    }
 		    String url = "https://webkiosk."+inst+".ac.in/CommonFiles/UserAction.jsp";
 		    String attendance = "https://webkiosk."+inst+".ac.in/StudentFiles/Academic/StudentAttendanceList.jsp";
@@ -365,7 +375,7 @@ public class attendance extends SherlockFragment {
 		    if(refreshtype==10)pd.setProgress(10);
 		    else pd.setProgress(50);
 //		    pd.setMessage("Logging in");
-		    
+
 		    String result = http.GetPageContent(attendance);
 		    if(refreshtype==10)pd.setProgress(20);
 		    else pd.setProgress(100);
@@ -374,7 +384,7 @@ public class attendance extends SherlockFragment {
 
 		     // System.out.println(result);
 
-		    
+
 		    http.trimmer(result);
 			//
 
@@ -391,8 +401,8 @@ public class attendance extends SherlockFragment {
 //		    	pd.setMessage("Fetching Subject Attendance");
 
 			    for(int i=0;i<15;i++) {
-			    	
-				    if(http.data[i][5]!=null && http.data[i][5]!="N/A") {	
+
+				    if(http.data[i][5]!=null && http.data[i][5]!="N/A") {
 				    	attendance="https://webkiosk."+inst+".ac.in/StudentFiles/Academic/"+http.data[i][5];
 						result = http.GetPageContent(attendance);
 //						pd.setProgress(prog+num);
@@ -414,20 +424,20 @@ public class attendance extends SherlockFragment {
 						}
 						else
 							lastClass="None";
-		
+
 						lastAbsentIndex=result.lastIndexOf("Absent");
 						if(lastAbsentIndex>=0) {
 							result=result.substring(0,lastAbsentIndex);
 							lastAbsentIndex=result.lastIndexOf("am</")>result.lastIndexOf("pm</")?result.lastIndexOf("am</"):result.lastIndexOf("pm</");
 								lastAbsent=result.substring(lastAbsentIndex-17,lastAbsentIndex-7);
 						}
-						else					
+						else
 							lastAbsent="None";
 							http.data[i][6]=lastClass;
 							http.data[i][7]=lastAbsent;
 							http.data[i][8]=present+"";
 							http.data[i][9]=absent+"";
-			    	
+
 				    }
 				    else {
 				    	http.data[i][6]="None";
@@ -435,10 +445,10 @@ public class attendance extends SherlockFragment {
 						http.data[i][8]="0";
 						http.data[i][9]="0";
 				    }
-			    		
+
 					// System.out.println(i+" "+lastClass+" "+lastAbsent+" "+present+" "+absent+" ");
 
-					
+
 				}
 			    pd.setProgress(100);
 
@@ -449,11 +459,11 @@ public class attendance extends SherlockFragment {
 		    http.printData();
 		    }
 		    catch(Exception e) {
-		    	
-		    	
+
+
 		    	System.out.println("Exception inBkg = "+e);
 
-		    	
+
 		    	if(e.getMessage().equals("https://webkiosk.juet.ac.in/StudentFiles/Academic/null")) {
 		    		got=1;
 				    http.printData();
@@ -477,30 +487,30 @@ public class attendance extends SherlockFragment {
 				  // System.out.println(data[i][9]);
 		    //       System.out.println();
 
-		          
+
 		      }
 
-		      
+
 		      DateFormat dateFormat = new SimpleDateFormat("dd MMM");
 		      Calendar cal = Calendar.getInstance();
 		      String date=""+dateFormat.format(cal.getTime());
-		      
+
 
 				 String FILENAME = "hello_file";
 				 FileOutputStream fos;
 				try {
-					fos = getActivity().getApplicationContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-					
+					fos = attendance.this.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+
 
 					// System.out.println("This is crazy");
 
-					
+
 					int i=0;String s;
-					
+
 
 					// System.out.println("Refresh Code: "+refreshtype);
-					
-					
+
+
 					if(refreshtype==10)
 						fos.write((date+"~"+"notsoquick\n").getBytes());
 					else if(refreshtype==20)
@@ -537,11 +547,11 @@ public class attendance extends SherlockFragment {
 						i++;
 					}
 					fos.close();
-					
+
 
 					// System.out.println("Done!");
 
-					
+
 				} catch(Exception e){
 
 					 System.out.println("Err : "+e);
@@ -556,21 +566,21 @@ public class attendance extends SherlockFragment {
 			  for(int i=0;i<15;i++) {
 				  try{
 					  part=result.substring(result.indexOf("<tr")+16,result.indexOf("</tr>"));
-				  
+
 					  // System.out.println(part);
-				  
+
 				  }
 				  catch(Exception e){
 
 				  	// System.out.println("Error "+e);
 
 				  	break;}
-				  
+
 				  //part="<td>PROJECT PART I - 10B19CI791</td>\n	\n<td>&nbsp;</td>\n<td>&nbsp;</td>\n\n<td>&nbsp;</td>\n\n<td>&nbsp;</td>\n\n";
 
 				  for(int j=0;j<5;j++) {
 				  	part2=part.substring(part.indexOf("<td")+4,part.indexOf("</td>"));
-				  	
+
 				  	if(part2.equals("&nbsp;")) {
 				  		part2="N/A";
 				  	}
@@ -579,7 +589,7 @@ public class attendance extends SherlockFragment {
 				  		if(part2.startsWith("<fo")) {
 				  			part2=part2.substring(part2.indexOf(">")+1,part2.length());
 				  		}
-				  		
+
 				  		if(j==1 || j==4) {
 					  		if((j==1 && !part2.equals("N/A")) || (j==4 && (data[i][1].equals("N/A") && !part2.equals("N/A")))) {
 					  			data[i][5]=part.substring(part.indexOf("\'")+1,part.indexOf("\'>"));
@@ -589,14 +599,14 @@ public class attendance extends SherlockFragment {
 					  			data[i][5]="N/A";
 					  		}
 				  		}
-				  		
+
 				  	}
 				  	data[i][j]=part2;
 				  	//
 
 				  	// System.out.println(part2);
 
-				  	
+
 				  	part=part.substring(part.indexOf("</td")+5,part.length());
 
 				  }
@@ -639,21 +649,21 @@ public class attendance extends SherlockFragment {
 		    wr.close();
 		    //int responseCode = conn.getResponseCode();
 		    //pd.setMessage("Logging in...");
-		    
+
 
 		     // System.out.println("\nSending 'POST' request to URL : " + url);
 
-		    
-		    
+
+
 
 		     // System.out.println("Post parameters : " + postParams);
 
-		    
-		    
+
+
 
 		    // System.out.println("Response Code : " + responseCode);
 
-		    
+
 		    BufferedReader in =
 		             new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		    String inputLine;
@@ -675,16 +685,16 @@ public class attendance extends SherlockFragment {
 		    conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
 		    int responseCode = conn.getResponseCode();
-		    
+
 
 		     // System.out.println("\nSending 'GET' request to URL : " + url);
 
-		    
-		    
+
+
 
 		    // System.out.println("Response Code : " + responseCode);
 
-		    
+
 		    //pd.setMessage("Fetching data...");
 
 		    BufferedReader in =
@@ -698,13 +708,13 @@ public class attendance extends SherlockFragment {
 		    return response.toString();
 		  }
 		 public void onPreExecute() {
-			 
+
 
 			 // System.out.println("PREEXECUTE");
 
-			 
-			 pd=new ProgressDialog(getActivity());
-			 
+
+			 pd=new ProgressDialog(attendance.this);
+
 			 pd.setIndeterminate(false);
 			 pd.setProgressStyle(pd.STYLE_HORIZONTAL);
 			 pd.setMax(100);
@@ -716,11 +726,11 @@ public class attendance extends SherlockFragment {
 
 		 }
 		 public void onPostExecute(Void params) {
-			 
+
 
 			 // System.out.println("POSTEXECUTE");
 
-			 
+
 			 try{pd.dismiss();}
 			 catch(Exception e){
 
@@ -730,19 +740,19 @@ public class attendance extends SherlockFragment {
 
 			 //getActivity().setProgressBarIndeterminateVisibility(Boolean.FALSE);
 			 try{
-			 
+
 
 			 // System.out.println(""+data.length);
 
-			 
+
 			 if(got==0)
-				 Toast.makeText(getActivity().getApplicationContext(), "Connection Error/Wrong Credentials", Toast.LENGTH_LONG).show();
+				 Toast.makeText(attendance.this, "Connection Error/Wrong Credentials", Toast.LENGTH_LONG).show();
 			 else if(android.os.Build.VERSION.SDK_INT>10)
 				 reCreate();
 			 else
-			 {	 getActivity().finish();
-				 getActivity().startActivity(starter);
-				 getActivity().finish();
+			 {	 finish();
+				 startActivity(starter);
+				 finish();
 			 }}catch(Exception e){
 
 			 	// System.out.println("Recreation "+e);
@@ -751,7 +761,7 @@ public class attendance extends SherlockFragment {
 		 }
 		 @TargetApi(11)
 		 public void reCreate() {
-			 getActivity().recreate();
+			 recreate();
 		 }
 	}
 }

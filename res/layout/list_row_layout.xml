@@ -6,8 +6,7 @@
     android:orientation="horizontal"
     android:layout_gravity="center_vertical"
     android:paddingLeft="15dip"
-    android:paddingRight="15dip"
-    android:background="@drawable/card" >
+    android:paddingRight="15dip" >
 
     <TextView
         android:id="@+id/value"
@@ -20,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:text=""
         android:fontFamily="sans-serif-light"
-        android:textColor="@color/abs__bright_foreground_holo_light"
+        android:textColor="@android:color/primary_text_light"
         android:textSize="40sp"
         android:textStyle="normal"
         android:typeface="sans" />
@@ -39,37 +38,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=""
-                android:textSize="15sp"
-                android:textColor="@color/abs__bright_foreground_holo_light"
-                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/secondary_text_light"
+                android:textStyle="normal"
                 android:typeface="sans" />
-
-            <TextView
-                android:id="@+id/lec"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/subject"
-                android:gravity="bottom"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text=""
-                android:textColor="@color/abs__primary_text_disable_only_holo_light"                
-                android:textSize="12sp" />
-
-            <TextView
-                android:enabled="false"
-                android:visibility="gone"
-                android:id="@+id/tut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/lec"
-                android:layout_alignBottom="@+id/lec"
-                android:layout_toRightOf="@+id/lec"
-                android:paddingLeft="10dp"
-                android:text=""
-                android:textColor="@color/abs__primary_text_disable_only_holo_light"
-                android:textSize="12sp" />
 
         </RelativeLayout>
 
