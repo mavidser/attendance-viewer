@@ -28,7 +28,7 @@ public class Subject extends DialogFragment {
             Bundle savedInstanceState) {
 //		getDialog().requestWindowFeature((int) Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.activity_subject, container);
-        getDialog().setTitle("Subject Details");
+        getDialog().setTitle("");
         Bundle values=getArguments();
         
 

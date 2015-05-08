@@ -11,20 +11,17 @@
             backward-compatibility can go here.
             
         -->
-        <item name="android:colorPrimary">#004D40</item>
+        <item name="colorPrimary">#00695C</item>
         <!--   darker variant for the status bar and contextual app bars -->
         <item name="android:colorPrimaryDark">#004D40</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">#006064</item>
-        
+
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        
-        
-        
-        
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
