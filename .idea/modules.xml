@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../Android-SDK/extras/android/support/v7/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/../../Android-SDK/extras/android/support/v7/appcompat/appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/attendance-viewer.iml" filepath="$PROJECT_DIR$/attendance-viewer.iml" />
     </modules>
   </component>
 </project>
-

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="InstituteArray">
+        <item>JIIT-128</item>
+        <item>JUET</item>
+    </string-array>
+    <string-array name="InstituteValues">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="PrefetchEntries">
+        <item>Never</item>
+        <item>Only on Wi-Fi</item>
+        <item>Always</item>
+    </string-array>    
+</resources>
