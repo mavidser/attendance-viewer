@@ -389,12 +389,24 @@ public class attendance extends ActionBarActivity {
                 }
                 got=1;
                 http.printData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getSupportActionBar().setSubtitle("Last Updated: Today");
+                    }
+                });
             }
             catch(Exception e) {
                 e.printStackTrace();
                 if(e.getMessage().equals("https://webkiosk.juet.ac.in/StudentFiles/Academic/null")) {
                     got=1;
                     http.printData();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getSupportActionBar().setSubtitle("Last Updated: Today");
+                        }
+                    });
                 }
             }
             return null;
@@ -433,6 +445,7 @@ public class attendance extends ActionBarActivity {
                                   listview.getChildAt(i_final).setAlpha((float) 1);
                                   listview.getChildAt(i_final).setBackgroundColor(Color.TRANSPARENT);
                                   listview.getChildAt(i_final).setClickable(false);
+                                  getSupportActionBar().setSubtitle("Last Updated: Today");
                               }
                           }catch (Exception e) {
                               e.printStackTrace();
